@@ -1,0 +1,66 @@
+<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head>
+<body>
+    <h1>Welcome To Show Tracker</h1>
+    <script>
+        function getData(user) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/all');
+            xhr.send();
+            xhr.onload = function() {
+                // xhr.responeText.forEach(function (data) {
+                //     str += '<li>' + data + '</li>';
+                // });
+                var str = '<ul>';
+                var data = JSON.parse(xhr.responseText);
+                // console.log(xhr.responseText);
+                // console.log(data);
+                // var size = Object.keys(data).length;
+                // console.log(size);
+                $.each(data, function(key, value) {
+                    // console.log(key);
+                    // console.log(value);
+                    str += '<li>'
+                    $.each(value, function(key, value) {
+                        console.log(key);
+                        console.log(value);
+                        str += value + " ";
+                    });
+                    str += '</li>'
+                });
+                document.getElementById('dataFrame').innerHTML = str +'</ul>';
+            };
+        }
+
+    </script>
+    <div>
+        <h3>Show All</h3>
+        <button type='button' onclick="getData()">Get List</button>
+    </div>
+    <div id="dataFrame"></div>
+
+    <div>
+        <h3>Add Entry</h3>
+        <form action="/newUser" method="POST">
+            <div>
+                Username: <input type="text" name="user" required>
+            </div>
+            <div>
+                Show: <input type="text" name="show" required>
+            </div>
+            <div>
+                Episode Number <input type="number" name="episode" required>
+            </div>
+            <input type="submit" value="submit">
+        </form>
+        
+    </div>
+
+    <div>
+        <h3>Get Users Information</h3>
+        <form action="/user" method="GET">
+            Username: <input type="text" name="username" required>
+            <input type="submit" value="submit">
+        </form>
+    </div>
+</body>
+
